@@ -13,8 +13,8 @@ Facilitates 1on1 discussions between two employees.
 ## Using docker-compose
 
 * Make sure you have docker installed
-* ./gradlew build
-* docker-compose up
+* `./gradlew build`
+* `docker-compose up`
 
 # Notes
 
