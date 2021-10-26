@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  homework:
+    image: homework:latest
+    environment:
+      - MONGODB_CONNECTION_STRING=mongodb://mongodb
+    ports:
+      - "8080:8080"
+  mongodb:
+    image: mongo:latest
