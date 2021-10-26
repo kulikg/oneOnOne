@@ -14,7 +14,6 @@ import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.utility.DockerImageName
 import reactor.core.publisher.Flux
-import reactor.core.scheduler.Schedulers
 import reactor.core.scheduler.Schedulers.immediate
 import reactor.kotlin.core.publisher.toMono
 import reactor.kotlin.test.test

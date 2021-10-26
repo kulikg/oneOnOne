@@ -25,6 +25,7 @@ class OneOnOneService(
     fun delete(id: String) = acl.canDelete(id)
         .flatMap { repository.findAndRemove(Query(it), OneOnOne::class.java) }
         .switchIfEmpty { badRequest<OneOnOne>("you didn't delete anything") }
+        .map { "ok" }
 
     fun findOpen() = checkOpen(true)
         .flatMapMany { repository.find(Query(it), OneOnOne::class.java) }
@@ -41,6 +42,7 @@ class OneOnOneService(
         .filter(OneOnOne::open)
         .switchIfEmpty { badRequest("1on1 with id ${oneOnOne.id} is already closed") }
         .flatMap { add(oneOnOne) }
+        .map { "ok" }
 
     fun add(oneOnOne: OneOnOne) = userService.filterExistingUsers(oneOnOne.organizer, oneOnOne.attendee)
         .flatMap { badRequest<String>("unknown user(s): $it") }

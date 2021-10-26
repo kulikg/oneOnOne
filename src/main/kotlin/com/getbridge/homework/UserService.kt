@@ -9,10 +9,14 @@ import reactor.kotlin.core.publisher.toMono
 
 class UserService(private val repository: ReactiveMongoTemplate) {
     fun add(user: User) = repository.save(user)
+        .map { "ok" }
+
     fun findAll() = repository.findAll(User::class.java)
+
     fun delete(userName: String) = where("name").`is`(userName)
         .toMono()
         .flatMap { repository.remove(Query(it), User::class.java) }
+        .map { "ok" }
 
     fun filterExistingUsers(vararg users: User) = users.toFlux()
         .parallel()
