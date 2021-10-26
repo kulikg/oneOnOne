@@ -14,7 +14,7 @@ Facilitates 1on1 discussions between two employees.
 
 * Make sure you have docker installed
 * `./gradlew build`
-* `docker-compose up`
+* `docker-compose up`
 
 # Notes
 
