@@ -1,22 +1,22 @@
-#OneOnOne application
+# OneOnOne application
 
 Facilitates 1on1 discussions between two employees.
 
-#How to start the app?
+# How to start the app?
 
-##Using bootRun and an already started mongodb
+## Using bootRun and an already started mongodb
 
 * Make sure you have java 11 or newer on your PATH
 * export MONGODB_CONNECTION_STRING=<a valid mongodb connection string>
 * ./gradlew bootRun
 
-##Using docker-compose
+## Using docker-compose
 
 * Make sure you have docker installed
 * ./gradlew build
 * docker-compose up
 
-#Notes
+# Notes
 
 * a 1on1 belongs to an organizer and an attendee
 * both of them must exist
@@ -24,7 +24,7 @@ Facilitates 1on1 discussions between two employees.
 * only the organizer is permitted to edit or delete it
 * there's a builtin 'admin' user who can see and edit any of them
 
-#Example queries
+# Example queries
 
 * curl -H "Content-type: application/json" -X PUT localhost:8080/users/add -d '{"name":"jancsi"}'
 * curl -H "Content-type: application/json" -X PUT localhost:8080/users/add -d '{"name":"juliska"}'
