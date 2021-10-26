@@ -64,7 +64,7 @@ abstract class AbstractTest {
         if (it.statusCode().is2xxSuccessful) {
             it.bodyToFlux(type)
         } else {
-            it.bodyToMono(String::class.java)
+            it.bodyToMono(type)
                 .doOnNext(::println)
                 .subscribeOn(immediate())
                 .subscribe()
