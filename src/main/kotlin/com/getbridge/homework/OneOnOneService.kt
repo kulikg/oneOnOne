@@ -18,13 +18,13 @@ class OneOnOneService(
         .flatMapMany { repository.find(Query(it), OneOnOne::class.java) }
 
     fun find(id: String) = repository.findById(id, OneOnOne::class.java)
-        .switchIfEmpty { badRequest("nothing found") }
+        .switchIfEmpty { badRequest("no 1on1 found by id $id") }
         .flatMap(acl::canRead)
-        .switchIfEmpty { unauthorized("you don't have permissions") }
+        .switchIfEmpty { unauthorized("you don't have permissions to view this 1on1") }
 
     fun delete(id: String) = acl.canDelete(id)
         .flatMap { repository.findAndRemove(Query(it), OneOnOne::class.java) }
-        .switchIfEmpty { badRequest<OneOnOne>("did not delete anything") }
+        .switchIfEmpty { badRequest<OneOnOne>("you didn't delete anything") }
 
     fun findOpen() = checkOpen(true)
         .flatMapMany { repository.find(Query(it), OneOnOne::class.java) }
@@ -35,18 +35,18 @@ class OneOnOneService(
     fun update(oneOnOne: OneOnOne) = oneOnOne
         .toMono()
         .filter { it.id != null }
-        .switchIfEmpty { badRequest("id is null in given 1on1 data") }
+        .switchIfEmpty { badRequest("id is null in given 1on1") }
         .flatMap { repository.findById(it.id!!, OneOnOne::class.java) }
-        .switchIfEmpty { badRequest("1on1 event with id ${oneOnOne.id} is not found") }
+        .switchIfEmpty { badRequest("1on1 with id ${oneOnOne.id} not found") }
         .filter(OneOnOne::open)
-        .switchIfEmpty { badRequest("1on1 event with id ${oneOnOne.id} is already closed") }
+        .switchIfEmpty { badRequest("1on1 with id ${oneOnOne.id} is already closed") }
         .flatMap { add(oneOnOne) }
 
     fun add(oneOnOne: OneOnOne) = userService.filterExistingUsers(oneOnOne.organizer, oneOnOne.attendee)
-        .flatMap { badRequest<String>("unknown users: $it") }
+        .flatMap { badRequest<String>("unknown user(s): $it") }
         .switchIfEmpty {
             acl.canSave(oneOnOne)
-                .switchIfEmpty { unauthorized("you don't have permission to save 1on1") }
+                .switchIfEmpty { unauthorized("you don't have permissions to save this 1on1") }
                 .flatMap { repository.save(oneOnOne).map(OneOnOne::id) }
         }
 
