@@ -7,7 +7,7 @@ Facilitates 1on1 discussions between two employees.
 ## Using bootRun and an already started mongodb
 
 * Make sure you have java 11 or newer on your PATH
-* `export MONGODB_CONNECTION_STRING="<a valid mongodb connection string>"`
+* `export MONGODB_CONNECTION_STRING="a valid mongodb connection string"`
 * `./gradlew bootRun`
 
 ## Using docker-compose
